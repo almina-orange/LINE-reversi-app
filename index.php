@@ -78,7 +78,7 @@ function replyImagemap($bot, $replyToken, $alternativeText, $stones) {
   $imagemapMessageBuilder = new \LINE\LINEBot\MessageBuilder\ImagemapMessageBuilder('https://'.$_SERVER['HTTP_HOST'].'/imgs/'.urlencode(json_encode($stones)).'/'.uniqid(), $alternativeText, $baseSizeBuilder, $actionArray);
 
   $response = $bot->replyMessage($replyToken, $imagemapMessageBuilder);
-  if (!$response->isScuceeded()) {
+  if (!$response->isSucceeded()) {
     error_log('Failed!'.$response->getHTTPStatus.' '.$response0->getRawBody());
   }
 }
