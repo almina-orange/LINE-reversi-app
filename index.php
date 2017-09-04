@@ -45,7 +45,41 @@ foreach ($events as $event) {
     continue;
   }
 
-  // parrot
-  $bot->replyText($event->getReplyToken(), $event->getText());
+  // stones starting position
+  $stones = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+
+  // reply image map
+  // replyImagemap($bot, $event->getReplyToken(), 'board', $stoens);
+  $bot->replyText($event->getReplyToken(), $evnet->getText());
+}
+
+/*=== functions ===*/
+// reply board Imagemap
+function replyImagemap($bot, $replyToken, $alternativeText, $stones) {
+  // action array
+  $actionArray = array();
+
+  // add dummy tap area
+  $areaBuilder = new \LINE\LINEBot\ImagemapActionBuilder\AreaBuilder(0, 0, 1, 1);
+  array_push($actionArray, new \LINE\LINEBot\ImagemapActionBuilder\ImagemapMessageActionBuilder('-', $areaBuilder));
+
+  // build "ImagemapMessage"
+  // 'https://...' is URL of image
+  $baseSizeBuilder = new \LINE\LINEBot\MessageBuilder\Imagemap\BaseSizeBuilder(1040, 1040);
+  $imagemapMessageBuilder = new \LINE\LINEBot\MessageBuilder\ImagemapMessageBuilder('https://'.$_SERVER['HTTP_HOST'].'/imgs/'.urlencode(json_encode($stones)).'/'.uniqid(), $alternativeText, $baseSizeBuilder, $actionArray);
+
+  $response = $bot->replyMessage($replyToken, $imagemapMessageBuilder);
+  if (!$response->isScuceeded()) {
+    error_log('Failed!'.$response->getHTTPStatus.' '.$response0->getRawBody());
+  }
 }
 ?>
