@@ -59,7 +59,7 @@ foreach ($events as $event) {
 
   // reply image map
   // replyImagemap($bot, $event->getReplyToken(), 'board', $stoens);
-  $bot->replyText($event->getReplyToken(), $evnet->getText());
+  $bot->replyText($event->getReplyToken(), $event->getText());
 }
 
 /*=== functions ===*/
